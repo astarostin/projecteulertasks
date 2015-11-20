@@ -1,3 +1,6 @@
+import utils
+
+
 def main():
 	print 'task 4'
 	n = 0
@@ -5,12 +8,10 @@ def main():
 		for j in range(999, i - 1, -1):
 			if i*j < n:
 				break
-			if is_plndr(i*j) and i*j > n:
+			if utils.is_palindrome(i*j) and i*j > n:
 				n = i*j
 	print n
 
-def is_plndr(n):
-	return str(n) == str(n)[::-1]
 
 if __name__ == '__main__':
 	main()
