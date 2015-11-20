@@ -46,6 +46,20 @@ def lcm(a, b):
 	return (a*b) // gcd(a, b)
 
 
+def lcm_list(lst):
+	""" Calculate the least common multiplier for given list
+	:param lst: list of numbers
+	:return: lcm
+	"""
+	if len(lst) == 0:
+		return 0
+	if len(lst) == 1:
+		return lst[0]
+	if len(lst) == 2:
+		return lcm(lst[0], lst[1])
+	return lcm(lcm_list(lst[:-1]), lst[-1])
+
+
 def rem(a, b):
 	""" Calculate remainder of division of the given numbers
 	:param a:
