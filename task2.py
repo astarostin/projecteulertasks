@@ -4,11 +4,11 @@ def main():
 	a, b = 1, 1
 	total = a + b
 	while a + b <= limit:
-		next = a + b
+		next_value = a + b
 		a = b
-		b = next
-		if next % 2:
-			total = total + next
+		b = next_value
+		if next_value % 2:
+			total += next_value
 
 	print total
 
