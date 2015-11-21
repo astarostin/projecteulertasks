@@ -6,9 +6,7 @@ def main():
     period = 2
     prev = 1
     while n < lim:
-        num = period
         for i in range(4):
-            #print prev+period
             res += prev + period
             prev += period
         period += 2

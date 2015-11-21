@@ -1,9 +1,11 @@
 cache = {}
 
+
 def main():
     print 'Task 15'    
     lim = 20
-    print find(0,0, lim + 1, 0)    
+    print find(0, 0, lim + 1, 0)
+
 
 def find(i, j, lim, num):    
     if i == lim - 1 and j == lim - 1:
@@ -27,6 +29,7 @@ def find(i, j, lim, num):
             cache[(i, j+1)] = num - old            
 
     return num
-    
+
+
 if __name__ == '__main__':
     main()

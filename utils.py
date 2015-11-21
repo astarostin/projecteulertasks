@@ -21,6 +21,11 @@ def is_prime_simple(num):
 
 
 def primes_eratosthenes_iteration(lst, i):
+	""" Perform iteration of eratosthened algorithm
+	:param lst: list of primes so far
+	:param i: new number to test
+	:return: is given number prime or not
+	"""
 	if i > 10 and (i % 2 == 0 or i % 5 == 0):
 		i += 1
 		return False
@@ -88,7 +93,7 @@ def lcm(a, b):
 	:param a:
 	:param b:
 	"""
-	return (a*b) // gcd(a, b)
+	return (a * b) // gcd(a, b)
 
 
 def lcm_list(lst):
@@ -118,13 +123,15 @@ def rem(a, b):
 	if a % b == 0:
 		return 0
 	i = 1
-	while (a - b*i) > b:
+	while (a - b * i) > b:
 		i += 1
 	return a - b * i
 
 
-def find_all_divisors(n):
+def find_all_divisors(n, include_self=True, include_one=True):
 	""" Find all divisord for given number
+	:param include_one: include 1 to result
+	:param include_self: include origin number to result
 	:param n: number
 	:return: list of divisors
 	"""
@@ -138,16 +145,55 @@ def find_all_divisors(n):
 			if j != i:
 				lst.append(j)
 		i += 1
+	if not include_self and n in lst:
+		lst.remove(n)
+	if not include_one:
+		lst.remove(1)
 	return lst
 
 
-def is_palindrome(s):
-	"""Check string for palindrome
-	:param s: string to check
+def fact(n):
+	""" Calculate factorial of the given number
+	:param n:
+	:return: factorial
 	"""
-	return str(s) == str(s)[::-1]
+	if n == 1:
+		return 1
+	else:
+		return n * fact(n - 1)
 
 
-def measure_time(count=100):
+def next_perm(data):
+	i = len(data) - 1
+	while i > 0 and data[i] < data[i - 1]:
+		i -= 1
+	if i == 0:
+		return None
+	tail = data[i:]
+	before_tail = data[i - 1]
+	min_in_tail = 10
+	min_in_tail_pos = -1
+
+	for j in range(0, len(tail)):
+		if min_in_tail > tail[j] > before_tail:
+			min_in_tail = tail[j]
+			min_in_tail_pos = j
+
+	if min_in_tail_pos != -1:
+		data[i - 1] = min_in_tail
+		tail[min_in_tail_pos] = before_tail
+		tail.reverse()
+		data[i:] = tail
+
+	return data
+
+
+def measure_time(source, stmt="main()", count=100):
+	""" Measure time of given statement
+	:param source: source file with statement
+	:param stmt: statement to execute and measure
+	:param count: count of repeats
+	:return: time in seconds
+	"""
 	import timeit
-	print(timeit.timeit("main()", setup="from __main__ import main", number=count) / count)
+	print(timeit.timeit(stmt, setup="from " + source + " import " + stmt[:-2], number=count) / count)

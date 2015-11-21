@@ -1,4 +1,5 @@
 import utils
+import utils_string
 
 
 def main():
@@ -8,7 +9,7 @@ def main():
 		for j in range(999, i - 1, -1):
 			if i*j < n:
 				break
-			if utils.is_palindrome(i*j) and i*j > n:
+			if utils_string.is_palindrome(i*j) and i*j > n:
 				n = i*j
 	print n
 
