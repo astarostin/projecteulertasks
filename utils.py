@@ -164,6 +164,10 @@ def fact(n):
 
 
 def next_perm(data):
+	""" Returns next permutation for given list of digits
+	:param data:
+	:return:
+	"""
 	i = len(data) - 1
 	while i > 0 and data[i] < data[i - 1]:
 		i -= 1
@@ -186,6 +190,20 @@ def next_perm(data):
 		data[i:] = tail
 
 	return data
+
+
+def is_pandigital(n, upper_bound=9):
+	""" Check if given number contains all digits from 1 to upper_bound exactly once
+	:param n:
+	:param upper_bound:
+	:return:
+	"""
+	if len(str(n)) != upper_bound:
+		return False
+	for i in xrange(1, upper_bound + 1):
+		if str(i) not in str(n):
+			return False
+	return True
 
 
 def measure_time(source, stmt="main()", count=100):
