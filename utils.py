@@ -1,7 +1,7 @@
 import math
 
 
-def is_prime(num):
+def is_prime_simple(num):
 	"""Check if num is prime number.
 	:param num: number to check
 	"""
@@ -18,6 +18,51 @@ def is_prime(num):
 		cur += 1
 
 	return True
+
+
+def primes_eratosthenes_iteration(lst, i):
+	if i > 10 and (i % 2 == 0 or i % 5 == 0):
+		i += 1
+		return False
+	is_prime = True
+	sqrt_val = math.sqrt(i)
+	for j in lst:
+		if j > sqrt_val:
+			break
+		if i % j == 0:
+			is_prime = False
+			break
+	return is_prime
+
+
+def primes_eratosthenes_amount(amount):
+	""" Calculates prime numbers using sieve of Eratosthenes method
+	:param amount: amount of primes to get
+	:return: list of prime numbers
+	"""
+	lst = []
+	i = 2
+	while len(lst) < amount:
+		if primes_eratosthenes_iteration(lst, i):
+			lst.append(i)
+		i += 1
+	return lst
+
+
+def primes_eratosthenes_bound(max_value):
+	""" Calculates prime numbers using sieve of Eratosthenes method
+	:param max_value: max prime value
+	:return: list of prime numbers
+	"""
+	lst = []
+	i = 2
+	while True:
+		if primes_eratosthenes_iteration(lst, i) and i < max_value:
+			lst.append(i)
+		if i > max_value:
+			break
+		i += 1
+	return lst
 
 
 def gcd(a, b):
@@ -78,8 +123,31 @@ def rem(a, b):
 	return a - b * i
 
 
+def find_all_divisors(n):
+	""" Find all divisord for given number
+	:param n: number
+	:return: list of divisors
+	"""
+	lst = []
+	i = 1
+	j = n // i
+	while i < j:
+		if n % i == 0:
+			lst.append(i)
+			j = n // i
+			if j != i:
+				lst.append(j)
+		i += 1
+	return lst
+
+
 def is_palindrome(s):
 	"""Check string for palindrome
 	:param s: string to check
 	"""
 	return str(s) == str(s)[::-1]
+
+
+def measure_time(count=100):
+	import timeit
+	print(timeit.timeit("main()", setup="from __main__ import main", number=count) / count)

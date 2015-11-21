@@ -1,7 +1,9 @@
 import re
 
+
 def main():
 	print 'task 8'
+	chain_len = 13
 	num = '''
 	73167176531330624919225119674426574742355349194934
 	96983520312774506326239578318016984801869478851843
@@ -23,25 +25,27 @@ def main():
 	84580156166097919133875499200524063689912560717606
 	05886116467109405077541002256983155200055935729725
 	71636269561882670428252483600823257530420752963450'''
-	
-	parts = filter(lambda x: len(x) > 4, filter(None, re.sub(r'\s', '', num).split('0')))
+
+	parts = filter(lambda x: len(x) >= chain_len, re.sub(r'\s', '', num).split('0'))
 	max_prod = 0
 	for part in parts:
-		res = process(part)
+		res = process(part, chain_len)
 		if res > max_prod:
 			max_prod = res
 	print max_prod
 	
 	
-def process(s):
-	max_prod = cur_prod = int(s[0]) * int(s[1]) * int(s[2]) * int(s[3]) * int(s[4])
-	i = 1;
-	while i < len(s) - 4:
-		cur_prod = (cur_prod / int(s[i-1])) * int(s[i+4])
+def process(s, chain_len):
+	max_prod = -1
+	cur_prod = reduce(lambda x, y: int(x) * int(y), s[:chain_len])
+	start = 1
+	while start < len(s) - chain_len + 1:
+		cur_prod = (cur_prod // int(s[start - 1])) * int(s[start + chain_len - 1])
 		if cur_prod > max_prod:
 			max_prod = cur_prod
-		i += 1
+		start += 1
 	return max_prod
+
 
 if __name__ == '__main__':
 	main()

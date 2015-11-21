@@ -1,6 +1,7 @@
 import re
 import math
 
+
 def main():
 	print 'task 11'
 	raw = '''
@@ -29,9 +30,9 @@ def main():
 	numbers = map(int, filter(None, re.sub(r'\s', ' ', raw).split(' ')))
 	size = int(math.sqrt(len(numbers)))
 
-	data = [numbers[i:i+size] for i in range(0, len(numbers), size) ]
+	data = [numbers[i:i+size] for i in range(0, len(numbers), size)]
 		
-	#print data
+	# print data
 	lists = []
 	# add horizontal rows
 	for row in data:
@@ -89,13 +90,14 @@ def main():
 				max_prod = res
 
 	print max_prod	
-	
+
+
 def process_plain_list_no_zeros(s, lim):
 	max_prod = cur_prod = 1
 	for i in range(lim):
 		cur_prod *= s[i]
 
-	i = 1;
+	i = 1
 	while i < (len(s) - (lim - 1)):
 		cur_prod = (cur_prod / int(s[i-1])) * int(s[i+lim-1])
 		if cur_prod > max_prod:
@@ -103,10 +105,10 @@ def process_plain_list_no_zeros(s, lim):
 		i += 1
 	return max_prod
 
+
 def process_plain_list(s, lim):
 	lists = []	
 	i = 0
-	res = 0
 	while i < len(s):
 		while i < len(s) and s[i] == 0:
 			i += 1
@@ -125,7 +127,6 @@ def process_plain_list(s, lim):
 
 	return max_prod
 
+
 if __name__ == '__main__':
-	import timeit
-	count=100
-	print(timeit.timeit("main()", setup="from __main__ import main", number=count) / count)
+	main()

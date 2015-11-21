@@ -1,5 +1,6 @@
 import re
 
+
 def main():
 	number = '''
 	37107287533902102798797998220837590246510135740250
@@ -107,6 +108,4 @@ def main():
 	print str(sum(lst))[:10]
 
 if __name__ == '__main__':
-	import timeit
-	count=100
-	print(timeit.timeit("main()", setup="from __main__ import main", number=count) / count)
+	main()

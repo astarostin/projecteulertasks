@@ -10,7 +10,7 @@ def main():
 	while not found:
 		while cur > 2 and n % cur != 0:
 			cur -= 1
-		found = utils.is_prime(cur)
+		found = utils.is_prime_simple(cur)
 		if not found:
 			cur -= 1
 	
