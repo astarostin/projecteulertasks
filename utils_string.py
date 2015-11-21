@@ -33,3 +33,11 @@ def is_palindrome(s):
 	:param s: string to check
 	"""
 	return str(s) == str(s)[::-1]
+
+
+def word_value(s):
+    res = 0
+    for c in s:
+        res += (ord(c) - ord('A') + 1)
+
+    return res

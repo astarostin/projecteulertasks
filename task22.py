@@ -1,5 +1,7 @@
 import re
 
+from utils_string import word_value
+
 
 def main():
     print 'task 22'
@@ -18,14 +20,6 @@ def main():
         i += 1
 
     print total
-
-
-def word_value(s):
-    res = 0
-    for c in s:
-        res += (ord(c) - ord('A') + 1)
-
-    return res
 
 
 if __name__ == '__main__':
