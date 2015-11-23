@@ -165,7 +165,7 @@ def fact(n):
 
 def next_perm(data):
 	""" Returns next permutation for given list of digits
-	:param data:
+	:param data: list of digits
 	:return:
 	"""
 	i = len(data) - 1
@@ -192,15 +192,15 @@ def next_perm(data):
 	return data
 
 
-def is_pandigital(n, upper_bound=9):
+def is_pandigital(n, lower_bound=1, upper_bound=9):
 	""" Check if given number contains all digits from 1 to upper_bound exactly once
 	:param n:
 	:param upper_bound:
 	:return:
 	"""
-	if len(str(n)) != upper_bound:
+	if len(str(n)) != upper_bound - lower_bound + 1:
 		return False
-	for i in xrange(1, upper_bound + 1):
+	for i in xrange(lower_bound, upper_bound + 1):
 		if str(i) not in str(n):
 			return False
 	return True
