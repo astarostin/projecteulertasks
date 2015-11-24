@@ -70,6 +70,21 @@ def primes_eratosthenes_bound(max_value):
 	return lst
 
 
+def get_prime_factors(n):
+	primes = primes_eratosthenes_bound(100000)
+	factors = []
+	i = 0;
+	
+	while n > 1 and i < len(primes):
+		if n % primes[i] == 0:
+			n /= primes[i]
+			factors.append(primes[i])
+		else:
+			i += 1
+
+	return factors	
+
+
 def gcd(a, b):
 	"""Calculate GCD for given numbers
 	:param a:
