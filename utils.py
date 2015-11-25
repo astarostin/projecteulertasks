@@ -221,6 +221,27 @@ def is_pandigital(n, lower_bound=1, upper_bound=9):
 	return True
 
 
+def count_selections(n, k):
+	""" Calculate number of combinatorial selections from n by k
+	:param n:
+	:param k:
+	:return: C from n by k
+	"""	
+	if k > n - k:
+		bigger = k
+		smaller = n - k
+	else:
+		bigger = n - k
+		smaller = k
+	if bigger == n:
+		return 1
+	if bigger == n - 1:
+		return n
+	nom = reduce(lambda x, y: x * y, xrange(bigger + 1, n + 1))
+	denom = reduce(lambda x, y: x * y, xrange(1, smaller + 1))
+	return nom / denom
+	
+
 def measure_time(source, stmt="main()", count=100):
 	""" Measure time of given statement
 	:param source: source file with statement
