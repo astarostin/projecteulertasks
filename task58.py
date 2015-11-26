@@ -1,13 +1,11 @@
 import math
 import utils
-import utils_string
 
 
 def main():
 	print 'Task 58'
 		
-	limit = 1000000
-	# primes = utils.primes_eratosthenes_bound(limit)
+	limit = 1000000	
 	border = 0.1
 	num_primes = 0
 	total = 1
