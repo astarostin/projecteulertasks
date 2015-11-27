@@ -1,9 +1,10 @@
 def main():
 	print 'Task 92'
 
-	total = 0
-	for n in xrange(10000000, 0, -1):
-		if chain(n) == 89:
+	cache = [n for n in xrange(1, 568) if chain(n) == 89]
+	total = len(cache)
+	for n in xrange(10000000, 567, -1):
+		if nxt(n) in cache:
 			total += 1
 	print total
 
