@@ -70,10 +70,32 @@ def primes_eratosthenes_bound(max_value):
 	return lst
 
 
+def numbers_2_batches(numbers, size=1000):
+	""" Organize given list of numbers into batches
+	:param numbers:
+	:param size:
+	:return:
+	"""
+	res = {}
+	for n in numbers:
+		batch_id = n / size
+		batch = []
+		if batch_id not in res:
+			res[batch_id] = batch
+		else:
+			batch = res[batch_id]
+		batch.append(n)
+	return res
+
+
 def get_prime_factors(n):
+	""" Get a list of all prime factors for given number
+	:param n:
+	:return:
+	"""
 	primes = primes_eratosthenes_bound(100000)
 	factors = []
-	i = 0;
+	i = 0
 	
 	while n > 1 and i < len(primes):
 		if n % primes[i] == 0:
@@ -210,6 +232,7 @@ def next_perm(data):
 def is_pandigital(n, lower_bound=1, upper_bound=9):
 	""" Check if given number contains all digits from 1 to upper_bound exactly once
 	:param n:
+	:param lower_bound:
 	:param upper_bound:
 	:return:
 	"""
@@ -251,3 +274,44 @@ def measure_time(source, stmt="main()", count=100):
 	"""
 	import timeit
 	print(timeit.timeit(stmt, setup="from " + source + " import " + stmt[:-2], number=count) / count)
+
+
+def next_selection(n, k, s):
+	""" Calculate next selection from n by k for given current selection s
+	:param n:
+	:param k:
+	:param s:
+	:return:
+	"""
+	if len(s) == 0:
+		return [x for x in xrange(k)]
+
+	i = k - 1
+	j = 1
+	while s[i] == n - j and i > 0:
+		i -= 1
+		j += 1
+	if i == 0 and s[i] == n - j:
+		return None
+	else:
+		return s[:i] + [s[i] + 1] + [x for x in xrange(s[i] + 2, s[i] + 2 + k - i - 1)]
+
+
+def get_selections(n, k):
+	""" Calculate all selection from n by k
+	:param n:
+	:param k:
+	:return:
+	"""
+	res = []
+	if k < 1 or k > n:
+		return res
+
+	s = []
+	while True:
+		s = next_selection(n, k, s)
+		if s is not None:
+			res.append(s)
+		else:
+			break
+	return res
