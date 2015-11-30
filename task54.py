@@ -18,7 +18,7 @@ CARDS = {'2': 2,
 		 '7': 7,
 		 '8': 8,
 		 '9': 9,
-		 '0': 10,
+		 'T': 10,
 		 'J': 11,
 		 'Q': 12,
 		 'K': 13,
@@ -28,20 +28,21 @@ CARDS = {'2': 2,
 def main():
 	print 'Task 54'
 
-	line = '8C TS KC 9H 4S 7D 2S 5D 3S AC'
-
-	cards = line.split()
-	hand1 = cards[:5]
-	hand2 = cards[5:]
-	rating1 = get_rating(hand1)
-	rating2 = get_rating(hand2)
-
-	print rating1
-	print rating2
-	if compare_ratings(rating1, rating2) == 1:
-		print 'First wins'
-	else:
-		print 'Second wins'
+	first_wins = 0
+	second_wins = 0
+	with open('data/task54.txt', 'r') as f:
+		for line in f.readlines():						
+			cards = line.split()	
+			hand1 = cards[:5]
+			hand2 = cards[5:]			
+			rating1 = get_rating(hand1)
+			rating2 = get_rating(hand2)
+			win = compare_ratings(rating1, rating2)
+			if win == 1:
+				first_wins += 1
+			elif win == -1:
+				second_wins += 1
+	print first_wins, second_wins
 
 
 def get_rating(hand):
@@ -83,7 +84,7 @@ def check_counts_of_a_kind(hand):
 		quadro, triple, pair1, pair2 = count_values(values)
 		values.remove(pair1)
 		values.remove(pair1)
-		values.append(0, pair1)
+		values.insert(0, pair1)
 	elif different_cards == 3:
 		quadro, triple, pair1, pair2 = count_values(values)
 		if triple is not None:
@@ -91,15 +92,15 @@ def check_counts_of_a_kind(hand):
 			values.remove(triple)
 			values.remove(triple)
 			values.remove(triple)
-			values.append(0, triple)
+			values.insert(0, triple)
 		else:
 			res_major = 'TWO_PAIRS'
 			values.remove(pair1)
 			values.remove(pair1)
 			values.remove(pair2)
-			values.remove(pair2)
-			values.append(0, min(pair1, pair2))
-			values.append(0, max(pair1, pair2))
+			values.remove(pair2)			
+			values.insert(0, min(pair1, pair2))
+			values.insert(0, max(pair1, pair2))
 	elif different_cards == 2:
 		quadro, triple, pair1, pair2 = count_values(values)
 		if quadro is not None:
@@ -108,7 +109,7 @@ def check_counts_of_a_kind(hand):
 			values.remove(quadro)
 			values.remove(quadro)
 			values.remove(quadro)
-			values.append(0, quadro)
+			values.insert(0, quadro)
 		else:
 			res_major = 'FULL_HOUSE'
 			values = [triple, pair1]
