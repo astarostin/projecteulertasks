@@ -28,21 +28,25 @@ CARDS = {'2': 2,
 def main():
 	print 'Task 54'
 
-	first_wins = 0
-	second_wins = 0
+	first_wins = 0	
+	# res = open('data/task54_result.txt', 'w')
 	with open('data/task54.txt', 'r') as f:
-		for line in f.readlines():						
+		#lines = ['5H 5C 6S 7S KD 2C 3S 8S 8D TD', '5D 8C 9S JS AC 2C 5C 7D 8S QH', '2D AD AS AH AC TD JD QD KD AD', '4D 5D KD 7D 8D 3S 4S 5S TS 7S', '2H 2D 4C 4D KS 2C 2D 8S 4S 4D']
+		for line in f.readlines():								
+		#for line in lines:						
 			cards = line.split()	
 			hand1 = cards[:5]
 			hand2 = cards[5:]			
 			rating1 = get_rating(hand1)
-			rating2 = get_rating(hand2)
+			rating2 = get_rating(hand2)			
 			win = compare_ratings(rating1, rating2)
+			# res.write("%s - %s %s\n" % (' '.join(hand1), decode(rating1[0]), rating1[1]))
+			# res.write("%s - %s %s\n" % (' '.join(hand2), decode(rating2[0]), rating2[1]))			
+			# res.write("RESULT = %s\n" % win)
 			if win == 1:
-				first_wins += 1
-			elif win == -1:
-				second_wins += 1
-	print first_wins, second_wins
+				first_wins += 1			
+	print first_wins
+	# res.close()
 
 
 def get_rating(hand):
@@ -58,14 +62,16 @@ def get_rating(hand):
 def check_flush_or_straight(hand):
 	same_suit = len(set([h[1] for h in hand])) == 1
 	values = sorted([CARDS[h[0]] for h in hand], reverse=True)
-	diff = 0
+	straight = True
 	for i in xrange(4):
-		diff += values[i] - values[i + 1]
-	if diff == 4 and not same_suit:
+		if values[i] - values[i + 1] != 1:
+			straight = False
+			break
+	if straight and not same_suit:
 		res_major = 'STRAIGHT'
-	elif same_suit and diff != 4:
+	elif same_suit and not straight:
 		res_major = 'FLUSH'
-	elif same_suit and diff == 4:
+	elif same_suit and straight:
 		res_major = 'STRAIGHT_FLUSH'
 		if values[0] == CARDS['A']:
 			res_major = 'ROYAL_FLUSH'
@@ -145,6 +151,12 @@ def count_values(values):
 
 	return quadro, triple, pair1, pair2
 
+
+def decode(n):
+	for (key, val) in HANDS.items():
+		if val == n:
+			return key
+	
 
 def compare_ratings(r1, r2):
 	major1 = r1[0]
