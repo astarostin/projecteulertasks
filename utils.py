@@ -70,15 +70,15 @@ def primes_eratosthenes_bound(max_value):
 	return lst
 
 
-def numbers_2_batches(numbers, size=1000):
+def numbers_2_batches(numbers, sz=1000):
 	""" Organize given list of numbers into batches
 	:param numbers:
-	:param size:
+	:param sz:
 	:return:
 	"""
 	res = {}
 	for n in numbers:
-		batch_id = n / size
+		batch_id = n / sz
 		batch = []
 		if batch_id not in res:
 			res[batch_id] = batch
