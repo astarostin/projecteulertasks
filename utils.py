@@ -7,15 +7,18 @@ def is_prime_simple(num):
 	"""
 	if num < 2:
 		return False
-	if num == 2:
+	if num == 2 or num == 3 or num == 5:
 		return True
 
+	if num % 2 == 0 or num % 3 == 0 or num % 5 == 0:
+		return False
+
 	lim = int(math.sqrt(num))
-	cur = 2
+	cur = 7
 	while cur <= lim:
 		if num % cur == 0:
 			return False
-		cur += 1
+		cur += 2
 
 	return True
 
