@@ -20,10 +20,13 @@ def main():
 							   [19, 31, 4723, 221227, 376633], [7, 19, 8941, 51133, 171533],
 							   [733, 883, 991, 18493, 55621]]
 	# (733, 883, 991, 18493, 55621)	
+	f = open('data/task60_fives_known.txt', 'w')
+	for five in magic_five_found_so_far:
+		f.write(' '.join([str(c) for c in five]) + '\n')
+	f.close()
 	sum_min = 1000000
 	best_five = None
-	fives = get_magic_fives(primes2)
-	print fives
+	fives = get_magic_fives(primes2, min_sum_found_so_far)	
 	
 	for five in fives:
 		s = sum(five)
@@ -35,7 +38,7 @@ def main():
 	print sum_min			
 
 	
-def get_magic_fives(primes2):
+def get_magic_fives(primes2, min_sum_found_so_far):
 	threes = set()
 	fours = set()
 	fives = set()
@@ -54,12 +57,15 @@ def get_magic_fives(primes2):
 
 	it = 0
 	for i in xrange(len(primes2) - 1):
+		n1 = primes2[i]
+		if it > 4000000:
+			break
 		for j in xrange(i + 1, len(primes2)):
 			it += 1
-			if it % 100000 == 0:
-				#cache_true.clear()
-				print it, len(pairs_map.keys()), len(cache_true)# , len(cache_false)
-			n1 = primes2[i]
+			if it % 100000 == 0:				
+				print it, len(pairs_map.keys()), len(cache_true)# , len(cache_false)			
+				cache_true.clear()			
+				
 			n2 = primes2[j]
 			#if (str(n1) + str(n2)) in primes3 and (str(n2) + str(n1)) in primes3:
 			if test_primes(n1, n2):
@@ -71,7 +77,7 @@ def get_magic_fives(primes2):
 					pairs_map[n2] = {n1}
 				else:
 					pairs_map[n2].add(n1)
-	# cache_true.clear()
+	cache_true.clear()
 
 	# print 'Got pairs'
 	#
@@ -92,15 +98,18 @@ def get_magic_fives(primes2):
 			if i < j and i in pairs_map[j] and j in pairs_map[i]:
 				ij = pairs_map[i] & pairs_map[j]
 				for k in ij:
-					threes.add((i, j, k))
-					print len(threes)
+					if i + j + k < min_sum_found_so_far:
+						threes.add((i, j, k))				
 
 	print 'Got threes'
-	print threes
+	f = open('data/task60_threes.txt', 'w')
+	for three in threes:
+		f.write(' '.join([str(c) for c in three]) + '\n')
+	f.close()
 	
 	for p in primes2:				
 		for three in threes:
-			if p not in three:
+			if p not in three and sum(three) + p < min_sum_found_so_far: 
 				combines = True
 				for n in three:
 					if test_primes(p, n) is not True:
@@ -112,11 +121,14 @@ def get_magic_fives(primes2):
 					fours.add(tuple(sorted(t)))	
 	
 	print 'Got fours'
-	print fours
+	f = open('data/task60_fours.txt', 'w')
+	for four in fours:
+		f.write(' '.join([str(c) for c in four]) + '\n')
+	f.close()
 				
 	for p in primes2:				
 		for four in fours:
-			if p not in four:
+			if p not in four and sum(four) + p < min_sum_found_so_far:
 				combines = True
 				for n in four:
 					if test_primes(p, n) is not True:
@@ -127,6 +139,10 @@ def get_magic_fives(primes2):
 					t.append(p)
 					fives.add(tuple(sorted(t)))
 	print 'Got fives'
+	f = open('data/task60_fives.txt', 'w')
+	for five in fives:
+		f.write(' '.join([str(c) for c in five]) + '\n')
+	f.close()
 	
 	return fives
 
