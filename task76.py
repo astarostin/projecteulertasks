@@ -1,23 +1,25 @@
-cache = {1: 1, 2: 1, 3: 2}
+limit = 100
+cache = {}
+data = [x for x in xrange(limit - 1, 0, -1)]
 
 
 def main():
 	print 'Task 76'
-	for n in xrange(4, 101):
-		print n, count(n)
-	# print count(100)
+	print solve(max(data) + 1, limit)
 
 
-def count(n):
-	if n in cache:
-		return cache[n]
-	num = 2
-	for i in xrange(2, n - 1):
-		num += count(i)
-		if i <= n / 2:
-			num += 1
-	cache[n] = num
-	return num
+def solve(prev, total):
+	if (prev, total) in cache:
+		return cache[(prev, total)]
+	count = 0
+	for d in data:
+		if d <= prev:
+			if d == total:
+				count += 1
+			if d < total:
+				count += solve(d, total - d)
+	cache[(prev, total)] = count
+	return count
 
 
 if __name__ == '__main__':
